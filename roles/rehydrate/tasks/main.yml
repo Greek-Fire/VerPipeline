@@ -1,0 +1,11 @@
+---
+# tasks file for rehydrate
+- name: download git repos
+  include_tasks: git.yml
+
+- name: create list of file paths to slurp
+  include_tasks: file_list.yml
+
+- name: slurp and create data structure
+  include_tasks: slurp.yml
+  loop:          "{{ file_path_list }}"

@@ -1,0 +1,15 @@
+---
+content_list: []
+# defaults file for rehydrate
+git_basic_auth:
+  username: test
+  password: test
+tmp_git_location: ./
+
+# ssh or https
+git_repo_url:     ssh://git@gitlab.consulting.redhat.com:2222/verizon/shared-platforms-operations/shared-platforms-rhpam-nonprod.git
+repo_name:        shared-platforms-rhpam-nonprod
+branch_name:      SDLC-4
+
+# file path to list of apps
+file_path: /pipeline/pam_last_installed/uat/

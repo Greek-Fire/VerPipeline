@@ -1,0 +1,32 @@
+---
+
+- name: case check
+  set_fact:
+    git_repo_url: "{{ git_repo_url | lower }}"
+
+- name: parse "{{ git_repo_url }}"
+  set_fact:
+    ssh_test: "{{ git_repo_url.split(':') }}"
+    
+- name: git clone using ssh # branch or tag for version
+  git:
+    clone:   true
+    force:   true
+    version: "{{ branch_name }}"
+    repo:    "{{ git_repo_url }}" 
+    dest:    "{{ tmp_git_location }}/{{ repo_name }}"
+  when: ( 'ssh' in ssh_test )
+
+- block:
+  - name: prep for basic auth
+    set_fact:
+      git_repo_url: "{{ git_repo_url | regex_replace('(?i)https://', 'https://{{ git_basic_auth.username | urlencode }}:{{ git_basic_auth.password | urlencode }}') }}"
+ 
+  - name: git clone using basic auth # branch or tag for version
+    git:
+      clone:   true
+      force:   true
+      version: "{{ branch_name }}"
+      repo:    "{{ git_repo_url }}" 
+      dest:    "{{ tmp_git_location }}/{{ repo_name }}"
+  when: ( 'https' in ssh_test )   

@@ -1,0 +1,18 @@
+
+- name: slurp content of file
+  slurp:
+    src: "{{ tmp_git_location }}/{{ item }}"
+  register: slurp
+
+- name: base64 encode data
+  set_fact:
+    slurp: "{{ slurp.content | b64decode }}"
+
+- name: create list from slurped content
+  set_fact:
+    slurp: "{{ slurp.split('\n') | map('trim') }}" 
+
+- name: add to list
+  set_fact:  
+    content_list: "{{ content_list + [slurp] }}"
+

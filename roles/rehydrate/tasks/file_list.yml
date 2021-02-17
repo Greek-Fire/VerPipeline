@@ -1,0 +1,8 @@
+- name: create list of files from git repo
+  find:
+    paths: "{{ tmp_git_location }}/{{ repo_name }}{{ file_path }}"
+  register: file_path_list
+
+- name: parse list
+  set_fact:
+    file_path_list: "{{ file_path_list.files | map(attribute='path') }}"
