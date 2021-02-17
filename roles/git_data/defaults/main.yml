@@ -1,6 +1,6 @@
 ---
 content_list: []
-# defaults file for rehydrate
+# defaults file for git_data 
 git_basic_auth:
   username: test
   password: test
